@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { fetchDecksAsync } from '../actions/deck'
 import { MyStatusBar } from './statusbar'
 import { IndividualCard } from './individualcard'
+import { setLocalNotification, clearNotification } from '../utils/notification'
 
 class Home extends React.Component {
   static navigationOptions = {
@@ -22,6 +23,8 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.props.fetchDeck();
+    clearNotification().then(setLocalNotification);
+    //setLocalNotification();
   }
 
   render() {
@@ -38,7 +41,7 @@ class Home extends React.Component {
               return (
                   <TouchableOpacity  key={deck.title} onPress={() => this.onCardDetail(deck.title)}>
                     <View>
-                      <IndividualCard title={deck.title} totalQuestions={30} />
+                      <IndividualCard title={deck.title} totalQuestions={deck.questions.length} />
                     </View>
                   </TouchableOpacity>
               )

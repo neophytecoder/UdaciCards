@@ -3,6 +3,8 @@ import {View, Text, TouchableOpacity, ScrollView} from 'react-native'
 import { connect } from 'react-redux'
 
 import { fetchCardsAsync } from '../actions/card'
+import { IndividualCard } from './individualcard'
+import { setLocalNotification, clearNotification } from '../utils/notification'
 
 class DeckDetail extends Component {
   static navigationOptions = {
@@ -15,6 +17,7 @@ class DeckDetail extends Component {
 
   startQuiz = () => {
     this.props.navigation.navigate('Quiz', {title: this.props.title});
+    clearNotification().then(setLocalNotification);
   }
 
   componentDidMount = () => {
@@ -22,13 +25,12 @@ class DeckDetail extends Component {
   }
 
   render() {
-    const { decks } = this.props;
-    console.log('CardDetail', decks);
+    const {title, deck } = this.props;
+    console.log('CardDetail', deck);
     return (
       <View>
         <Text>Card detail</Text>
-        <Text>{this.props.title}</Text>
-        <Text>{JSON.stringify(this.props.decks)}</Text>
+        <IndividualCard title={title} totalQuestions={deck.questions.length} />
         <TouchableOpacity onPress={this.addCard}>
           <View>
             <Text>add a card</Text>
@@ -45,7 +47,7 @@ class DeckDetail extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  decks: state.decks[props.navigation.state.params.title],
+  deck: state.decks[props.navigation.state.params.title],
   title: props.navigation.state.params.title,
   ...props
 })
