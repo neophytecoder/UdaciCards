@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet, Platform } from 'react-native'
+import {NavigationActions } from 'react-navigation'
 
 import {Card, FinishCard} from './card'
 
@@ -23,6 +24,25 @@ class Quiz extends Component {
       question: 0, correct: 0, showQuestion: true,
       totalCard: this.props.questions.length
     };
+  }
+
+  restartQuiz = () => {
+    this.setState({question: 0, correct: 0, showQuestion: true});
+  }
+
+  goBack = () => {
+    this.props.navigation.goBack();
+    this.props.navigation.navigate('DeckDetail', { title: this.props.title });
+  }
+
+  goToHome = () => {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Tabs'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction);
   }
 
   isQuizEnd = () => {
@@ -56,7 +76,10 @@ class Quiz extends Component {
       return (
         <View style={styles.container}>
           <FinishCard correct={this.state.correct}
-            totalCard={this.state.totalCard} />
+            totalCard={this.state.totalCard}
+            restartQuiz={this.restartQuiz}
+            goBack={this.goBack}
+            goToHome={this.goToHome}/>
         </View>
       )
     }

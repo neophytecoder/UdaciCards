@@ -74,6 +74,8 @@ class CreateDeck extends Component {
     this.props.addDeck({title: this.state.title})
       .then(res => {
         this.setState({onSubmit: true, successful: true});
+        this.props.navigation.goBack();
+        this.props.navigation.navigate('DeckDetail', {title: this.state.title})
       })
       .catch(err => {
         this.setState({onSubmit: true, successful: false, err});

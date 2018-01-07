@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.8,
     alignItems: 'stretch',
-    justifyContent: 'center',
     shadowColor: 'rgba(0,0,0,0.24)',
     shadowOffset: {
       width: 0,
@@ -113,18 +112,33 @@ class Card extends Component {
               </View>
             </TouchableOpacity>
           </View>
-
       </View>
     );
   }
 }
 
-const FinishCard = ({correct, totalCard}) => (
+const FinishCard = ({correct, totalCard, restartQuiz, goBack, goToHome}) => (
   <View style={styles.body}>
     <Text style={styles.title}>Finish!</Text>
     <Text style={{fontSize: 15}}>
       Answers correctly: {correct}/{totalCard}
     </Text>
+    <TouchableOpacity onPress={restartQuiz} style={styles.button}>
+      <View>
+        <Text>Restart quiz</Text>
+      </View>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={goBack} style={styles.button}>
+      <View>
+        <Text>Go deck view</Text>
+      </View>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={goToHome} style={styles.button}>
+      <View>
+        <Text>Home</Text>
+      </View>
+    </TouchableOpacity>
+
   </View>
 )
 
