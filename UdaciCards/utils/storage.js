@@ -40,6 +40,21 @@ export const addCardToDeck = (title, card) => {
     });
 }
 
+export const removeADeck = (title, deletedValue) => {
+  return getDecks()
+    .then(decks => {
+        const {[title]: deletedValue, ...deckRest} = decks;
+        return deckRest;
+      }
+    )
+    .then(decks => {
+      return AsyncStorage.setItem(DECKS_DB, JSON.stringify(decks));
+    })
+    .catch(res => {
+      console.log('error', res);
+    });
+}
+
 // {
 //   React: {
 //     title: 'React',

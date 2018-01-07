@@ -29,7 +29,6 @@ class DeckDetail extends Component {
     console.log('CardDetail', deck);
     return (
       <View>
-        <Text>Card detail</Text>
         <IndividualCard title={title} totalQuestions={deck.questions.length} />
         <TouchableOpacity onPress={this.addCard}>
           <View>

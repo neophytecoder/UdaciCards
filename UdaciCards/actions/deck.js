@@ -1,4 +1,4 @@
-import { saveDeckTitle, getDecks } from '../utils/storage'
+import { saveDeckTitle, getDecks, removeADeck } from '../utils/storage'
 
 export const ADD_DECK = 'ADD_DECK';
 export const REMOVE_DECK = 'REMOVE_DECK';
@@ -15,8 +15,13 @@ export const removeDeck = (deck) => ({
 
 export const addDeckAsync = (deck) => (dispatch) => {
   const newDeck = {...deck, questions: []};
-  saveDeckTitle(newDeck.title)
+  return saveDeckTitle(newDeck.title)
     .then(res => dispatch(addDeck(newDeck)));
+}
+
+export const removeDeckAsync = (deck) => (dispatch) => {
+  return removeADeck(deck.title, deck)
+    .then(res => dispatch(removeDeck(deck)));
 }
 
 export const fetchDecksAsync = (dispatch) => {
