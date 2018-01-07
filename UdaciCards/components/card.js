@@ -1,9 +1,55 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  questionNumber: {
+    alignSelf: 'flex-start',
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
+  child1: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  buttonGroup: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#D7CCC8',
+    borderRadius: Platform.OS === 'ios'? 12 : 2,
+    margin: 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    shadowColor: 'rgba(0,0,0,0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    padding: 15
+  },
+})
 
 const Question = ({question, onAnswer}) => (
-  <View>
-    <Text>{question}</Text>
+  <View style={styles.body}>
+    <Text style={styles.title}>{question}</Text>
     <TouchableOpacity onPress={onAnswer}>
       <View>
         <Text>Answer</Text>
@@ -13,8 +59,8 @@ const Question = ({question, onAnswer}) => (
 )
 
 const Answer = ({answer, onQuestion}) => (
-  <View>
-    <Text>{answer}</Text>
+  <View style={styles.body}>
+    <Text style={styles.title}>{answer}</Text>
     <TouchableOpacity onPress={onQuestion}>
       <View>
         <Text>Question</Text>
@@ -36,38 +82,49 @@ class Card extends Component {
   render() {
     const {question, questionNo, length, onCorrect, onIncorrect} = this.props;
     return (
-      <View>
-        <Text>{questionNo + 1}/{length}</Text>
-        {this.state.showQuestion &&
-          (
-            <Question question={question.question}
-              onAnswer={this.onToggleChange} />
-          )
-        }
-        {!this.state.showQuestion &&
-          (
-            <Answer answer={question.answer}
-                onQuestion={this.onToggleChange} />
-          )
-        }
-        <TouchableOpacity onPress={onCorrect}>
-          <View>
-            <Text>correct</Text>
+      <View style={styles.container}>
+        <View style={styles.questionNumber}>
+          <Text>{questionNo + 1}/{length}</Text>
+        </View>
+
+          <View style={styles.body}>
+            {this.state.showQuestion &&
+              (
+                <Question question={question.question}
+                  onAnswer={this.onToggleChange} />
+              )
+            }
+            {!this.state.showQuestion &&
+              (
+                <Answer answer={question.answer}
+                    onQuestion={this.onToggleChange} />
+              )
+            }
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onIncorrect}>
-          <View>
-            <Text>incorrect</Text>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity onPress={onCorrect} style={styles.button}>
+              <View>
+                <Text>correct</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onIncorrect} style={styles.button}>
+              <View>
+                <Text>incorrect</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+
       </View>
     );
   }
 }
 
 const FinishCard = ({correct, totalCard}) => (
-  <View>
-    <Text>Finish {correct}/{totalCard}</Text>
+  <View style={styles.body}>
+    <Text style={styles.title}>Finish!</Text>
+    <Text style={{fontSize: 15}}>
+      Answers correctly: {correct}/{totalCard}
+    </Text>
   </View>
 )
 

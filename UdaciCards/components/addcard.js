@@ -1,8 +1,18 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, TouchableOpacity} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 
 import { addCardAsync } from '../actions/card'
+import { styles } from './createdeck'
+
+const addedStyles = StyleSheet.create({
+  title: {
+    alignSelf: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    margin: 20,
+  }
+})
 
 class AddCard extends Component {
   static navigationOptions = {
@@ -11,7 +21,7 @@ class AddCard extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {question: '', answer: ''};
+    this.state = {question: 'Type question...', answer: 'the answer'};
   }
 
   onAddCard = () => {
@@ -23,19 +33,33 @@ class AddCard extends Component {
 
   render() {
     return (
-      <View>
-        <Text>{this.props.title}</Text>
-        <TextInput style={{width: 200, height: 30, borderWidth: 2}} onChangeText={text => this.setState({'question': text})} />
-        <TextInput style={{width: 200, height: 30, borderWidth: 2}} onChangeText={text => this.setState({'answer': text})} />
-        <TouchableOpacity onPress={this.onAddCard}>
+      <View style={styles.container}>
+        <Text style={addedStyles.title}>{this.props.title}</Text>
+        <TextInput style={styles.input} value={this.state.question}
+          onChangeText={text => this.setState({'question': text})} />
+        <TextInput style={styles.input} value={this.state.answer}
+          onChangeText={text => this.setState({'answer': text})} />
+        <TouchableOpacity style={styles.addNew} onPress={this.onAddCard}>
           <View>
-            <Text>Add card</Text>
+            <Text style={styles.button}>Add card</Text>
           </View>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const SuccessView = () => (
+  <Text style={styles.success}>
+    Successful
+  </Text>
+)
+
+const FailureView = ({err}) => (
+  <Text style={styles.fail}>
+    Fail: {err}! Please, retry!
+  </Text>
+)
 
 const mapStateToProps = (state, props) => ({
   title: props.navigation.state.params.title,
