@@ -15,12 +15,16 @@ export const saveDeckTitle = (title) => {
   return getDecks()
     .then(parsedResponse => {
       console.log('parsedResponse', parsedResponse);
-      if (parsedResponse.hasOwnProperty(title)) {
+      let deck = {};
+      if (parsedResponse) {
+        deck = parsedResponse;
+      }
+      if (deck && deck.hasOwnProperty(title)) {
         throw 'Already exist!';
       }
-      const newDeck = { title: title, questions: [] };
+      const newDeck = { title, questions: [] };
       return AsyncStorage.setItem(DECKS_DB,
-          JSON.stringify({...parsedResponse, [title]: newDeck})
+          JSON.stringify({...deck, [title]: newDeck})
         )
     });
 }
