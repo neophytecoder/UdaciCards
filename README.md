@@ -3,11 +3,11 @@ A card-quiz application made with react native. Built for ios (not yet tested in
 
 In this app, a user can see the list of card the user made, create a new card and quiz themselves. In addition, the app will remind the user if they have not studied the flash cards on that day.
 
-<img src='readme/1.png' />
-<img src='readme/2.png' />
-<img src='readme/3.png' />
-<img src='readme/4.png' />
-<img src='readme/5.png' />
+<img src='readme/1.png' width='48%' />
+<img src='readme/2.png' width='48%' />
+<img src='readme/3.png' width='48%' />
+<img src='readme/4.png' width='48%' />
+<img src='readme/5.png' width='48%' />
 
 ## Installation
 
